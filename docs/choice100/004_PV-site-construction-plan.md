@@ -122,3 +122,28 @@ if __name__ == '__main__':
               [2, 3, 6, 7, 1]]
     assert solve_method(row, col, width, power, region) == 10
 ```
+
+## 自解 2024-1-9
+```python
+m, n, length, power = map(int, input().split())
+base = []
+for i in range(m):
+    base.append(list(map(int, input().split())))
+
+
+def is_ok(m, n, length, power, base) -> int:
+    if m < length or n < length:
+        return 0
+    ans = 0
+    for j in range(m-length+1):
+        for k in range(n-length+1):
+            total = 0
+            for x in range(j, j+length):
+                total += sum(base[x][k:k+length])
+            if total >= power:
+                ans += 1
+    return ans
+
+
+print(is_ok(m, n, length, power, base))
+```
