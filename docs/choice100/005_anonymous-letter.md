@@ -111,3 +111,28 @@ if __name__ == '__main__':
     anonymousLetter = ["cb", "fe"]
     assert solve_method(newspaper, anonymousLetter) is False
 ```
+
+## 自解 2024-1-9
+```python
+newspaper = [i for i in input().split()]
+sorted_newspaper = []
+for i in newspaper:
+    sorted_newspaper.append("".join(sorted(i)))
+newspaper_dct = {}
+for j in sorted_newspaper:
+    if j not in newspaper_dct:
+        newspaper_dct[j] = 0
+    newspaper_dct[j] += 1
+
+anonymousLetter = [i for i in input().split()]
+flag = True
+for i in anonymousLetter:
+    j = "".join(sorted(i))
+    if j in newspaper_dct and newspaper_dct[j] > 0:
+        newspaper_dct[j] -= 1
+    else:
+        flag = False
+        break
+print(flag)
+
+```
