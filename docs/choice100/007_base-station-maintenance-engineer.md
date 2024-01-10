@@ -90,3 +90,37 @@ if __name__ == '__main__':
     ]
     assert solve_method(num, paths_length) == 3
 ```
+
+## 自解 2024-1-10
+```python
+# 处理输入
+num = int(input())
+lst = []
+for i in range(num):
+    lst.append(list(map(int, input().split())))
+
+
+def main(n, ls):
+    arr = []  # 所有路径的路程
+    go_home(n, ls, arr, path=[0], path_len=[0])
+    return arr
+
+
+def go_home(n, ls, arr, path, path_len):
+    if len(path) == n:  # 所有站点到达过后，回到原点
+        path_len.append(ls[path[-1]][0])
+        arr.append(sum(path_len))
+        path_len.pop()
+        return
+    for i in range(1, n):
+        if i in path:
+            continue
+        path_len.append(ls[path[-1]][i])
+        path.append(i)
+        go_home(n, ls, arr, path, path_len)
+        path.pop()
+        path_len.pop()
+
+
+print(main(num, lst))
+```
