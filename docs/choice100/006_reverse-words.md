@@ -73,3 +73,26 @@ if __name__ == '__main__':
     s = "woh era uoy ? I ma enif."
     assert solve_method(s) == "how are you ? I am fine."
 ```
+
+## 自解 2024-1-10
+```python
+s = input()
+
+
+def reversed_words(s: str) -> str:
+    ans_list = []
+    for i in s.split():
+        if len(i) == 1:
+            ans_list.append(i)
+        elif i[-1] in ",.?":
+            temp = i[-2::-1]
+            temp += i[-1]
+            ans_list.append(temp)
+        else:
+            temp = i[::-1]
+            ans_list.append(temp)
+    return " ".join(ans_list)
+
+
+print(reversed_words(s))
+```
