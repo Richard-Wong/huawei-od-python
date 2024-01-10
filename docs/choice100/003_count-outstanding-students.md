@@ -301,3 +301,20 @@ if __name__ == '__main__':
     ]
     assert solve_method(N, card_total, card_records) == [1, 0]
 ```
+## 自写代码
+```python
+N = int(input())
+quantity = list(map(int, input().split()))
+dct = {}
+for i in range(1, 31):
+    temp = list(map(int, input().split()))
+    for j in temp:
+        if j not in dct:
+            dct[j] = [0, i]
+        dct[j][0] += 1
+
+tuple_list = sorted(dct.items(), key=lambda x: (-x[1][0], x[1][1], x[0]))
+id_list = [i[0] for i in tuple_list[:5]]
+print(" ".join(map(str, id_list)))
+
+```
