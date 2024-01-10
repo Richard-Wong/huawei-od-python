@@ -140,3 +140,55 @@ if __name__ == '__main__':
     assert solve_method("123admyffc79ptaagghi2222smeersst88mnrt", "ssyyfgh") == "mnrt"
     assert solve_method("abcmnq", "rt") == "Not Found"
 ```
+
+## 自解 2024-1-10
+```python
+# 处理输入
+str1 = input()
+str2 = input()
+
+
+def decode(s1, s2) ->str:
+    # 分隔字符串1
+    ans_list = []
+    temp = ""
+    for i in s1:
+        if i in "1234567890abcdef":
+            if temp == "":
+                continue
+            else:
+                ans_list.append(temp)
+                temp = ""
+        else:
+            temp += i
+    if temp != "":
+        ans_list.append(temp)
+    # print(ans_list)
+    # 统计字符串2中不同字母的个数
+    amount = diff(s2)
+    # print(amount)
+    # 排序
+    ans_dct = {}
+    for m in ans_list:
+        temp = diff(m)
+        if temp <= amount:
+            ans_dct[m] = temp
+    # print(ans_dct)
+    ans_tuple = sorted(ans_dct.items(), key=lambda x: (x[1], x[0]), reverse=True)
+    # print(ans_tuple)
+    if len(ans_tuple) == 0:
+        return "Not Found"
+    return ans_tuple[0][0]
+
+
+def diff(s) ->int:
+    dct = {}
+    for j in s:
+        if j not in dct:
+            dct[j] = 0
+    amount = len(dct)
+    return amount
+
+
+print(decode(str1, str2))
+```
