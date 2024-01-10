@@ -80,3 +80,29 @@ if __name__ == '__main__':
     assert solve_method("My sister is in the house not in the yard") \
            == "in in eht eht My is not adry ehosu eirsst"
 ```
+
+## 自解 2024-1-10
+```python
+# 处理输入
+str1 = input()
+# 单词分隔
+ls = list(str1.split())
+# 单词字典序
+dct = {}
+for i in range(len(ls)):
+    ls[i] = "".join(sorted(ls[i]))
+    if ls[i] not in dct:
+        length = len(ls[i])
+        dct[ls[i]] = [0, length]
+    dct[ls[i]][0] += 1
+
+ans_tuple = sorted(dct.items(), key=lambda x: (-x[1][0], x[1][1], x[0]))
+# print(ans_tuple)
+
+ans_list = []
+for i in ans_tuple:
+    while i[1][0] > 0:
+        ans_list.append(i[0])
+        i[1][0] -= 1
+print(" ".join(ans_list))
+```
