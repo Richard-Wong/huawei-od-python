@@ -94,3 +94,23 @@ if __name__ == '__main__':
     assert solve_method("private_void_method", "public_void_method") == "_void_method"
     assert solve_method("hiworld", "hiweb") == "hiw"
 ```
+
+## 自解
+```python
+def solve(text1, text2):
+    n1, n2 = len(text1), len(text2)
+    ans = [0, -1]  # 记录最长公共子串的长度及尾坐坐标
+    dp = [[0]*(n1+1) for i in range(n2+1)]
+    for j in range(1, n2+1):
+        for i in range(1, n1+1):
+            if text1[i-1] == text2[j-1]:
+                dp[j][i] = dp[j-1][i-1] + 1
+                if dp[j][i] > ans[0]:
+                    ans = [dp[j][i], i]
+    return text1[ans[1]-ans[0]:ans[1]]
+
+
+A = "hiworld"
+B = "hiweb"
+print(solve(A, B))
+```
