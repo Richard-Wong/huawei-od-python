@@ -118,3 +118,23 @@ if __name__ == '__main__':
     T = [[64, 73709551616]]
     assert solve_method(T) == ["red"]
 ```
+
+## 自解 2024-1-11
+```python
+def solve(n, k):
+    flag = 0
+    while n > 1:
+        if k >= 2**(n-2):  # 如果k在右侧，则k等于上一个减半位置
+            k -= 2**(n-2)
+            n -= 1
+        elif k < 2**(n-2): # 如果K在左侧，则k等于上一个位置的取反
+            n -= 1
+            flag += 1
+    return "red" if flag % 2 == 0 else "blue"
+
+
+n = int(input())
+for i in range(n):
+    n, k = map(int, input().split())
+    print(solve(n, k))
+```
