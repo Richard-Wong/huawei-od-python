@@ -85,3 +85,24 @@ if __name__ == '__main__':
     assert solve_method("abc", "s,sdf123  A2c4b") == 2
     assert solve_method("abc", "s,sdf123 A2c4bd 523[]") == -1
 ```
+
+## 自解 2024-1-11
+```python
+k = input()
+box = list(input().split())
+
+
+def find_key(key, boxs):
+    for i,word in enumerate(box, start=1):
+        temp = ""
+        for j in word:
+            if j.isalpha():
+                temp += j.lower()
+        temp = "".join(sorted(temp))
+        if temp == key:
+            return i
+    return -1
+
+
+print(find_key(k, box))
+```
