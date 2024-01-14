@@ -90,3 +90,43 @@ if __name__ == '__main__':
     assert solve_method("h he hel hell hello") == "hello"
     assert solve_method("b eredderd bw bww bwwl bwwln bwwlm") == "bwwln"
 ```
+
+## 自解
+```python
+# 解题思路：
+# 将所有密码按长度进行排序，然后按长度从小到大，去找加一位的密码是否存在
+
+# 处理输入
+in_list = list(input().split())
+# 将密码按长度进行分类存储
+def find_secret(ls: list):
+    dct = {}
+    for secret in ls:
+        if len(secret) not in dct:
+            dct[len(secret)] = []
+        dct[len(secret)].append(secret)
+
+    if 1 not in dct or 2 not in dct:
+        return ""
+    sorted_dct = sorted(dct.items(), reverse=True)
+    temp = sorted_dct.pop()
+    num = temp[0]
+    ans_list = temp[1]
+    while sorted_dct:
+        temp_list = []
+        temp = sorted_dct.pop()
+        if temp[0] != num+1:
+            break
+        for i in temp[1]:
+            if i[:num] in ans_list:
+                temp_list.append(i)
+        if len(temp_list) == 0:
+            break
+        num += 1
+        ans_list = temp_list
+    ans_list.sort()
+    return ans_list[-1]
+
+
+print(find_secret(in_list))
+```
