@@ -99,3 +99,33 @@ if __name__ == '__main__':
             "10000": [1, "76892"]}
     assert solve_method(head, link)
 ```
+
+## 自解
+```python
+# 解题断路
+# 用字典存储数据，减小查找时间复杂度
+
+
+head_address, num = map(int, input().split())
+
+# 用字典存，减小查找时间
+dct_in = {}
+for i in range(num):
+    addr, data, nex = map(int, input().split())
+    dct_in[addr] = (data, nex)
+
+
+def find_mid_node(dct):
+    val = dct[head_address][0]
+    follow = dct[head_address][1]
+
+    ans_list = [val]
+    while follow != -1:
+        ans_list.append(dct[follow][0])
+        follow = dct[follow][1]
+    n = len(ans_list)
+    return ans_list[n//2] if n%2 == 0 else ans_list[(n-1)//2]
+
+
+print(find_mid_node(dct_in))
+```
