@@ -74,3 +74,36 @@ def solve_method(arr):
 if __name__ == '__main__':
     assert solve_method([2, 5, 3, 6, 5, 6]) == 3
 ```
+## 题解
+```python
+in_list = list(map(int, input().split()))
+
+
+def solution(nums):
+    n = len(in_list)
+    # 双指针
+    i = -1
+    j = n
+    left_sum = 1
+    right_sum = 1
+    while i < j:
+        if left_sum < right_sum:
+            i += 1
+            left_sum *= in_list[i]
+        elif left_sum > right_sum:
+            j -= 1
+            right_sum *= in_list[j]
+        else:
+            if i == j -1:
+                return i
+            if i == j - 2:
+                return i+1
+            i += 1
+            j -= 1
+            left_sum *= in_list[i]
+            right_sum *= in_list[j]
+    return -1
+
+
+print(solution(in_list))
+```
