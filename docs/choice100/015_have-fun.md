@@ -127,3 +127,38 @@ if __name__ == '__main__':
            [1, 1, 1, 1]]
     assert solve_method(4, 4, arr) == 2
 ```
+## 自解
+```python
+def solution(g):
+    ans = 0
+    n = len(g)
+    m = len(g[0])
+    for j in range(m):
+        for i in range(n):
+            if g[i][j] == 1:
+                ans += 1
+                dfs(g, i, j, n, m)
+    return ans
+
+
+def dfs(g, i, j, n, m):
+    if i < 0 or j < 0 or i >= n or j >= m or g[i][j] == 0:
+        return
+    g[i][j] = 0
+    dfs(g, i-1, j-1, n, m)
+    dfs(g, i, j-1, n, m)
+    dfs(g, i+1, j-1, n, m)
+    dfs(g, i-1, j, n, m)
+    dfs(g, i+1, j, n, m)
+    dfs(g, i-1, j+1, n, m)
+    dfs(g, i, j+1, n, m)
+    dfs(g, i+1, j+1, n, m)
+
+
+n, m = map(int, input().split())
+graph = []
+for _ in range(n):
+    graph.append(list(map(int, input().split())))
+
+print(solution(graph))
+```
