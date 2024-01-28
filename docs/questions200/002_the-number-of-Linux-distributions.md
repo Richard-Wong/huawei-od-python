@@ -130,3 +130,27 @@ if __name__ == '__main__':
 1. [图论：连通分量和强连通分量](https://zhuanlan.zhihu.com/p/37792015)
 2. [AmosCloud Wiki题解](https://wiki.amoscloud.com/zh/ProgramingPractice/NowCoder/Adecco/Topic0244)
 3. [从七桥问题开始：全面介绍图论及其应用](https://zhuanlan.zhihu.com/p/34442520)
+
+## 自解
+```python
+# 处理输入
+n = int(input())
+in_list = []
+for _ in range(n):
+    in_list.append(list(map(int, input().split())))
+
+ans = 0
+for i in range(n):
+    stack = [i]
+    visited = set()
+    while stack:
+        i = stack.pop()
+        visited.add(i)
+        for j in range(n):  # [1, 1, 0, 0]
+            if in_list[i][j] == 1 and j not in visited:
+                stack.append(j)
+    ans = max(ans, len(visited))
+print(ans)
+
+
+```
