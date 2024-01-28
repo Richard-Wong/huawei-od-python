@@ -98,3 +98,35 @@ if __name__ == '__main__':
     nums = [10, 20, 30, 40, 60, 60, 70, 80, 90, 150]
     assert solve_method(15, nums) == 210
 ```
+## 自解
+```python
+money = int(input())
+message = [0]
+message.extend(list(map(int, input().split())))
+
+
+def func(mess, m):
+    ans = []
+    back(mess, m, ans, [], 0)
+    return max(ans)
+
+
+def back(mess, m, ans, path, total):
+    if m == 0:
+        ans.append(total)
+        return
+    for i in range(1, len(mess)):
+        if i > m:
+            break
+        m -= i
+        total += mess[i]
+        path.append((i, mess[i]))
+        back(mess, m, ans, path, total)
+        temp = path.pop()
+        m += temp[0]
+        total -= temp[1]
+
+
+print(func(message, money))
+
+```
