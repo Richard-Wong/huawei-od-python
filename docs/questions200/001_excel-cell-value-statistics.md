@@ -186,3 +186,76 @@ if __name__ == '__main__':
     sheet = [["1", "=A1+C1", "3"]]
     assert solve_method(1, 3, sheet, "A1:C1") == 8
 ```
+
+## 自解 2024-1-28
+```python
+# 当前输入中每个单元格内容仅为数字或公式两种
+
+# 处理输入
+rows, cols = map(int, input().split())
+in_list = []
+for _ in range(rows):
+    in_list.append(list(input().split()))
+area = input()
+
+# print(rows,cols,in_list, area)
+
+# 将输入列表全部处理成数字
+int_list = []
+for ls in in_list:
+    temp = []
+    for num in ls:
+        if num[0].isdigit():  # 情况一、值为数字
+            temp.append(int(num))
+        elif num[0] == "=":    # 情况二、为“=”
+            if "+" in num[1:]:
+                # 分隔
+                a, b = num[1:].split("+")
+                if a[0].isdigit():
+                    a = int(a)
+                else:
+                    y = ord(a[0]) - ord("A")
+                    x = int(a[1:])-1
+                    a = int(in_list[x][y])
+                if b[0].isdigit():
+                    b = int(b)
+                else:
+                    y = ord(b[0]) - ord("A")
+                    x = int(b[1:])-1
+                    b = int(in_list[x][y])
+                temp.append(a+b)
+            elif "-" in num[1:]:
+                a, b = num[1:].split("-")
+                if a[0].isdigit():
+                    a = int(a)
+                else:
+                    y = ord(a[0]) - ord("A")
+                    x = int(a[1:]) - 1
+                    a = int(in_list[x][y])
+                if b[0].isdigit():
+                    b = int(b)
+                else:
+                    y = ord(b[0]) - ord("A")
+                    x = int(b[1:]) - 1
+                    b = int(in_list[x][y])
+                temp.append(a-b)
+            else:  # 指定一个单元格，确认横纵坐标后，将指向的单元格值返回
+                y = ord(num[1]) - ord("A")
+                x = int(num[2:])-1
+                temp.append(int(in_list[x][y]))
+    int_list.append(temp[:])
+print(int_list)
+
+# 处理求和范围
+start, end = area.split(":")
+start = [int(start[1:])-1, ord(start[0]) - ord("A")]
+end = [int(end[1:])-1, ord(end[0]) - ord("A"), ]
+
+print(start, end)
+
+ans = 0
+for i in range(start[0], end[0]+1):
+    for j in range(start[1], end[1]+1):
+        ans += int_list[i][j]
+print(ans)
+```
