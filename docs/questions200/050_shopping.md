@@ -183,3 +183,37 @@ if __name__ == '__main__':
     assert solve_method(4, 15, [1, 2, 3, 4]) == [1, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 9, 10]
     assert solve_method(3, 7, [1, 10, 100]) == [1, 10, 11, 100, 101, 110, 111]
 ```
+
+## 自解一 2024-1-30
+```python
+'''
+用回溯套循环的方法暴力组合，考试中的话肯定会超时
+'''
+n, k = map(int, input().split())
+value = list(map(int, input().split()))
+
+
+def solve(v, depth):
+    ans_1 = []
+    backtracing(0, v, depth, [], 0, ans_1)
+    return ans_1
+
+
+def backtracing(start, value, depth, path, total, ans_1):
+    if len(path) == depth:
+        ans_1.append(sum(path))
+        return
+    for j in range(start, n):
+        path.append(value[j])
+        total += value[j]
+        backtracing(j + 1, value, depth, path, total, ans_1)
+        total -= path.pop()
+
+
+ans = []
+for i in range(1, n+1):
+    ans.extend(solve(value, i))
+ans.sort()
+for i in range(k):
+    print(ans[i])
+```
