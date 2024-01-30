@@ -86,3 +86,17 @@ if __name__ == '__main__':
     assert solve_method([9, 3, 5]) == [0, 2, 1]
     assert solve_method([1, 2, 2]) == [2, 0, 1]
 ```
+## 自解 
+```python
+in_list = list(map(int, input().split(",")))
+enumerate_list = []
+for i in enumerate(in_list):
+    enumerate_list.append(i)
+enumerate_list.sort(key=lambda x: x[1],reverse=True)
+n = len(enumerate_list)
+ans_list = [0] * n
+for i in range(n):
+    ans_list[enumerate_list[i][0]] = i
+print(",".join(map(str, ans_list)))
+
+```
