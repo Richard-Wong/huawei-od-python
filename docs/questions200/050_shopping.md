@@ -217,3 +217,32 @@ ans.sort()
 for i in range(k):
     print(ans[i])
 ```
+
+## 自解二
+```python
+n, k = map(int, input().split())
+ls = list(map(int, input().split()))
+
+
+class Group:
+    def __init__(self, cur_sum, nex_idx, nex_sum):
+        self.cur_sum = cur_sum
+        self.nex_idx = nex_idx
+        self.nex_sum = nex_sum
+
+    def __lt__(self, other):
+        return self.nex_sum < other.nex_sum
+
+
+import heapq
+heap = []
+heapq.heappush(heap, Group(0, 0, ls[0]))
+while k > 0:
+    item = heapq.heappop(heap)
+    print(item.nex_sum)
+    k -= 1
+    if item.nex_idx + 1 < n:
+        heapq.heappush(heap, Group(item.nex_sum, item.nex_idx + 1, item.nex_sum + ls[item.nex_idx + 1]))
+        heapq.heappush(heap, Group(item.cur_sum, item.nex_idx + 1, item.cur_sum + ls[item.nex_idx + 1]))
+
+````
