@@ -81,3 +81,33 @@ if __name__ == '__main__':
                [0, 1, 1]]
     assert solve_method(3, 3, servers) == 3
 ```
+
+## 自解 2024-2-2 函数内使用全局变量
+```python
+row, col = map(int, input().split())
+
+nums = []
+for _ in range(row):
+    nums.append(list(map(int, input().split())))
+
+
+def dfs(x, y):
+    if row > x >= 0 and 0 <= y < col and nums[x][y] == 1:
+        global count
+        count += 1
+        nums[x][y] = 0
+        for a, b in [(-1, 0), (1, 0), (0, 1), (0, -1)]:
+            dfs(x+a, y+b)
+
+
+
+ans = 0
+for i in range(row):
+    for j in range(col):
+        if nums[i][j] == 1:
+            count = 0
+            dfs(i, j)
+            ans = max(ans, count)
+print(ans)
+
+```
