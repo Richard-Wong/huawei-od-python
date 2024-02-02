@@ -97,3 +97,48 @@ if __name__ == '__main__':
     assert solve_method("acdbbbca") == "2,5"
     assert solve_method("abcabc") == "0,0"
 ```
+## 自解 2024-2-2
+```python
+str1 = input()
+
+
+#先转化，方便后续处理
+total = 0
+nums = []
+for i in str1:
+    num = ord(i)
+    total += num
+    nums.append(num)
+
+# 双指针
+left, right = 1, len(nums)-2
+a1, a2, a3 = nums[0], total-nums[0]-nums[left]-nums[-1]-nums[right], nums[-1]
+flag = False
+while left < right:
+    if a1 == a2 == a3:
+        flag = True
+        print(f"{left},{right}")
+        break
+    elif a2 < a1 or a2 < a3:
+        flag = False
+        break
+    else:
+        if a1 < a3:
+            a1 += nums[left]
+            left += 1
+            a2 -= nums[left]
+        elif a1 > a3:
+            a3 += nums[right]
+            right -= 1
+            a2 -= nums[right]
+        else:
+            a1 += nums[left]
+            left += 1
+            a2 -= nums[left]
+            a3 += nums[right]
+            right -= 1
+            a2 -= nums[right]
+if not flag:
+    print("0,0")
+
+```
