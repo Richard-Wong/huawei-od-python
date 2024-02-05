@@ -152,3 +152,48 @@ if __name__ == "__main__":
             [0, 0, 0, 0, 0]]
     assert solve_method(grid, [2, 1]) == 0
 ```
+
+## 自解 2024年2月5日
+```python
+row, col = map(int, input().split())
+alist = list(map(int, input().split()))
+matrix = []
+for i in range(row):
+    temp = alist[5*i: 5*i+col]
+    matrix.append(temp[:])
+# print(matrix)
+visited = [[False]*col for _ in range(row)]
+for i in range(row):
+    for j in range(col):
+        if matrix[i][j] > 0:
+            start = [i, j]
+        elif matrix[i][j] == -1:
+            visited[i][j] =True
+
+target_x, target_y = map(int, input().split())
+
+
+from collections import deque
+dq = deque()
+dq.append(start)
+
+
+def bfs(ls, signal):
+        # 坐标在边界内，且信号强度大于0
+        for x, y in [(1, 0), (0, -1), (-1, 0), (0, 1)]:
+            if 0 <= signal[0]+x < row and 0 <= signal[1]+y < col and not visited[signal[0]+x][signal[1]+y]:
+                dq.append([signal[0]+x, signal[1]+y])
+                matrix[signal[0]+x][signal[1]+y] = matrix[signal[0]][signal[1]] -1
+
+
+while dq:
+    pos = dq.popleft()
+    visited[pos[0]][pos[1]] = True
+    bfs(matrix, pos)
+    if visited[target_x][target_y]:
+        print(matrix[target_x][target_y])
+        for i in matrix:
+            print(i)
+        break
+
+```
