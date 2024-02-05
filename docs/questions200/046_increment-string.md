@@ -75,3 +75,38 @@ if __name__ == "__main__":
     assert solve_method("AABBA") == 1
     assert solve_method("BAABBABBAB") == 3
 ```
+
+## 自解 2024-2-5
+```python
+"""
+考虑以某一个点开始，前面的全是A，后面的全是B，此时，A无论是A还是B均满足题目要求
+只需要统计出该点前的B数量，以及该点后的A数量，相加之和，则是满足递增的要求
+再遍历一次满足递增要求的方案，找到最小值，即是答案
+"""
+str1 = input()
+
+def solve(st):
+    n = len(st)
+    leftB = [0]
+    for i in range(1, n):
+        if st[i-1] == "B":
+            leftB.append(leftB[i-1] + 1)
+        else:
+            leftB.append(leftB[i-1])
+    print(leftB)
+    rightA = [0] * n
+    for j in range(n-2, -1, -1):
+        if st[j+1] == "A":
+            rightA[j] = rightA[j+1] + 1
+        else:
+            rightA[j] = rightA[j+1]
+    print(rightA)
+
+    ans = n
+    for i in range(n):
+        ans = min(ans, leftB[i] + rightA[i])
+    return ans
+
+
+print(solve(str1))
+```
