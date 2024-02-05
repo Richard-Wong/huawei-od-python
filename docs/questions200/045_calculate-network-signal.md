@@ -197,3 +197,53 @@ while dq:
         break
 
 ```
+## 自解二 2024年2月5日
+```python
+row, col = map(int, input().split())
+alist = list(map(int, input().split()))
+grid = []
+for i in range(row):
+    temp = alist[i*col:(i+1)*col]
+    grid.append(temp)
+# print(grid)
+tarx, tary = map(int, input().split())  # 目标值的坐标
+
+source = (0, 0)
+source_flag = False
+for i in range(row):
+    for j in range(col):
+        if grid[i][j] > 0:
+            source = (i, j)  # 信号源的坐标
+            source_flag = True
+            break
+    if source_flag:
+        break
+
+visited = [[0]*col for _ in range(row)]  # 存储访问过的位置
+
+from collections import deque
+
+queue = deque()
+queue.append(source)
+visited[source[0]][source[1]] = 1  # 放入队列时，立即将该位置1
+
+while queue:  # 队列不为空时
+    curx, cury = queue.popleft()  # 弹出当前要处理的位置
+    val = grid[curx][cury]
+    if val <= 0:
+        continue
+    for dx, dy in [(1, 0), (0, 1), (-1, 0), (0, -1)]:
+        if 0 <= curx+dx < row and 0 <= cury+dy < col and not visited[curx+dx][cury+dy] and grid[curx+dx][cury+dy] != -1:
+            queue.append((curx+dx, cury+dy))
+            visited[curx+dx][cury+dy] = 1
+            grid[curx+dx][cury+dy] = val -1
+    if visited[tarx][tary]:
+        print(grid[tarx][tary])
+        break
+if not visited[tarx][tary]:
+    print(0)
+
+
+
+
+```
