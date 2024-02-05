@@ -114,3 +114,37 @@ if __name__ == "__main__":
     assert solve_method("A3") == "AAA"
     assert solve_method("{AD11B1{CF}3}3") == "ADDDDDDDDDDDBCFCFCFADDDDDDDDDDDBCFCFCFADDDDDDDDDDDBCFCFCF"
 ```
+
+## 自解 2024-2-5
+```python
+"""
+这一题的关键是将字符串压入栈后，在遇到数字时进行回溯，而不是遇到反花括号时
+"""
+
+instr = input()
+
+stack = []
+n = len(instr)
+i = 0
+while i < n:
+    if instr[i].isdigit():
+        num_str = instr[i]
+        while i+1 < n and instr[i+1].isdigit():
+            i += 1
+            num_str += instr[i]
+        num = int(num_str)
+        temp = stack.pop()
+        if temp.isalpha():
+            stack.append(temp * num)
+        elif temp == "}":
+            str_temp = ""
+            temp = stack.pop()
+            while temp != "{":
+                str_temp = temp + str_temp
+                temp = stack.pop()
+            stack.append(str_temp * num)
+    else:
+        stack.append(instr[i])
+    i += 1
+print("".join(stack))
+```
