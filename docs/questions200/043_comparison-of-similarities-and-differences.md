@@ -97,3 +97,28 @@ if __name__ == "__main__":
     assert solve_method(4, [4, 3, 5, 2]) == 4
     assert solve_method(5, [3, 5, 2, 8, 4]) == 8
 ```
+
+## 自解 2024-2-6
+```python
+"""
+求位与与异或，会导致超时
+问题可以直接简化为求两个数转化为二进制后，长度是否相等，长度相等时，最高位的1在同一个位置，相似大于差异；长度不同时，最高位分别是1和0，差异大于相似
+"""
+n = int(input())
+nums = list(map(int, input().split()))
+
+dct = {}
+for num in nums:
+    length = len(bin(num))
+    if length not in dct:
+        dct[length] = 0
+    dct[length] += 1
+
+ans = 0
+alist = [i for i in dct.values()]
+for i in range(len(alist)-1):
+    for j in range(i+1, len(alist)):
+        ans += alist[i] * alist[j]
+print(ans)
+
+```
