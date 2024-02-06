@@ -97,3 +97,18 @@ if __name__ == "__main__":
     assert solve_method(4, [4, 3, 5, 2]) == 4
     assert solve_method(5, [3, 5, 2, 8, 4]) == 8
 ```
+
+## 自解 2024-2-6
+```python
+n = int(input())
+nums = list(map(int, input().split()))
+
+ans = 0
+for i in range(n - 1):
+    for j in range(i + 1, n):
+        if nums[i] ^ nums[j] > nums[i] & nums[j]:
+            ans += 1
+
+print(ans)
+
+```
