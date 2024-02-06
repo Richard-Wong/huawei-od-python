@@ -111,3 +111,22 @@ if __name__ == "__main__":
     assert solve_method([1, 2, 3, 4, 5], [4, 3, 2, 1]) == 4
     assert solve_method([1, 2, 4, 4, 2, 1], [1, 2, 3]) == 4
 ```
+## 自解 2024-2-6
+```python
+"""
+哈希
+"""
+m = int(input())
+n = int(input())
+alist = list(input().split())
+blist = list(input().split())
+
+adct = {}
+for i in alist:
+    adct[i] = adct.get(i, 0) +1
+ans = 0
+for j in blist:
+    if j in adct:
+        ans += adct[j]
+print(ans)
+```
