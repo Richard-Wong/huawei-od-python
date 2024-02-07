@@ -111,3 +111,32 @@ for i in range(row):
 print(ans)
 
 ```
+## 自解二 2024-2-7 根本不用使用函数，直接可以写出来，其实连双向队列也不用
+```python
+from collections import deque
+
+row, col = map(int, input().split())
+
+grid = []
+for i in range(row):
+    grid.append(list(map(int, input().split())))
+
+
+queue = deque()
+ans = 0
+for i in range(row):
+    for j in range(col):
+        if grid[i][j] == 1:
+            queue.append((i, j))
+            grid[i][j] = 0
+            temp = 1
+            while queue:
+                x, y = queue.popleft()
+                for dx, dy in ((1, 0), (0, 1), (-1, 0), (0, -1)):
+                    if 0 <= x+dx < row and 0 <= y+dy < col and grid[x+dx][y+dy] == 1:
+                        queue.append((x+dx, y+dy))
+                        grid[x+dx][y+dy] = 0
+                        temp += 1
+            ans = max(ans, temp)
+print(ans)
+```
