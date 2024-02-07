@@ -142,3 +142,47 @@ if __name__ == "__main__":
     assert solve_method(4, [3, 2, 6, 3], [0, 1, 1, 0], 2) == 6
     assert solve_method(4, [3, 2, 6, 8], [0, 1, 1, 1], 1) == 16
 ```
+## 自解 2024-2-7
+```python
+length = int(input())
+goods = list(map(int, input().split()))
+types = list(map(int, input().split()))
+k = int(input())
+
+drys, wets = [], []
+for i in range(length):
+    if types[i]:
+        wets.append(goods[i])
+    else:
+        drys.append(goods[i])
+
+
+def solve(ls, mid):
+    total = 0
+    count = 1
+    for i in ls:
+        if total + i > mid:
+            count += 1
+            total = i
+        else:
+            total += i
+    return count
+
+
+def main(ls, n):
+    if not ls:
+        return 0
+    start = max(ls)
+    end = sum(ls)
+    while start < end:
+        mid = (start + end) // 2
+        cnt = solve(ls, mid)
+        if cnt > n:
+            start = mid + 1
+        else:
+            end = mid
+    return start
+
+
+print(max(main(drys, k), main(wets, k)))
+```
