@@ -88,6 +88,7 @@ if __name__ == '__main__':
 ```
 ## 自解 
 ```python
+# 使用排序方法错误，例如 454输出为201， 而434输出则为021，需要按照题目，模拟输出的过程
 in_list = list(map(int, input().split(",")))
 enumerate_list = []
 for i in enumerate(in_list):
@@ -99,4 +100,33 @@ for i in range(n):
     ans_list[enumerate_list[i][0]] = i
 print(",".join(map(str, ans_list)))
 
+```
+
+## 自解二 2024-2-17
+```python
+from collections import deque
+
+alist = list(map(int, input().split(",")))
+
+numbers = [0] * 9
+for i in alist:
+    numbers[i-1] += 1
+print(numbers)
+
+
+index_list = [(i, j) for i, j in enumerate(alist)]
+dq = deque(index_list)
+
+ans_list = [-1] * len(alist)
+
+count = 0
+while dq:
+    temp = dq.popleft()
+    if sum(numbers[temp[1]:]) > 0:
+        dq.append(temp)
+    else:
+        ans_list[temp[0]] = count
+        count += 1
+        numbers[temp[1]-1] -= 1
+print(",".join(map(str, ans_list)))
 ```
