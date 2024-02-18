@@ -114,3 +114,28 @@ if __name__ == "__main__":
     assert solve_method(["08", "10", "2"]) == "10082"
     assert solve_method(["01", "02"]) == "102"
 ```
+
+## 自解 2024-2-18
+```python
+# 输入0，还有0 0 的特殊情况还未处理
+nums = list(input().split())
+nums_zero, nums_no_zero = [], []
+for i in nums:
+    if i[0] == "0":
+        nums_zero.append(i)
+    else:
+        nums_no_zero.append(i)
+
+# 排序
+import functools
+compare = lambda x,y:1 if y+x < x+y else -1
+nums_zero.sort(key=functools.cmp_to_key(compare))
+nums_no_zero.sort(key=functools.cmp_to_key(compare))
+
+if len(nums_zero) == 0:
+    print("".join(nums_no_zero))
+elif len(nums_no_zero) == 0:
+    print("".join(nums_zero).lstrip("0"))
+else:
+    print(nums_no_zero[0] + "".join(nums_zero) + "".join(nums_no_zero[1:]))
+```
