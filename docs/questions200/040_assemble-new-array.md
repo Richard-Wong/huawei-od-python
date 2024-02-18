@@ -104,3 +104,36 @@ if __name__ == "__main__":
     assert solve_method([2, 3], 5) == 2
     assert solve_method([3, 4], 2) == 1
 ```
+
+## 自解
+```python
+# 需要加入起始索引，但不需要+1， +1则不重复取数，不+1则可重复取数，但不取之前的数
+in_ls = list(map(int, input().split()))
+m = int(input())
+min_val = min(in_ls[0], in_ls[-1])  # 数组连续，最小的数要么第一个，要么最后一个
+
+ans_list = []
+
+
+def back(ls, path, target, nim_val, start_idx):
+    if target == 0:
+        ans_list.append(path[:])
+        return
+    elif target < 0:
+        target += path[-1]
+        if 0 < target < min_val:
+            path[-1] = target
+            ans_list.append(path[:])
+        return
+    for i in range(start_idx, len(ls)):
+        path.append(ls[i])
+        target -= ls[i]
+        back(ls, path, target, min_val, i)
+        target += path.pop()
+
+
+back(in_ls, [], m, min_val, 0)
+print(ans_list)
+print(len(ans_list))
+
+```
