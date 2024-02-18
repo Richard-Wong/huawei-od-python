@@ -102,3 +102,30 @@ if __name__ == "__main__":
 
     assert sorted(solve_method(100, [100])) == [[100]]
 ```
+
+## 自解 2024-2-19
+```python
+# 回溯法
+amount = int(input())
+price = eval(input())
+n = len(price)
+
+ans = []
+
+
+def back(amount, price, start, path):
+    if amount <= 0:
+        if amount == 0:
+            ans.append(path[:])
+        return
+    for i in range(start, n):
+        path.append(price[i])
+        amount -= price[i]
+        back(amount, price, i, path)
+        amount += path.pop()
+
+
+back(amount, price, 0, [])
+print(ans)
+
+```
